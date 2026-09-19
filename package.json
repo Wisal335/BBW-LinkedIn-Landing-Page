@@ -1,13 +1,15 @@
 {
-  "name": "astro-temp",
+  "name": "bbw-linkedin-landing-page",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "main": "server.js",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "start": "node server.js",
     "preview": "astro preview",
     "astro": "astro"
   },

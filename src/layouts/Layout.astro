@@ -1,0 +1,49 @@
+---
+interface Props {
+    title?: string;
+    description?: string;
+    themeColor?: string;
+}
+
+const {
+    title = "Big Brain Way",
+    description = "AI & Human Intelligence Integrated As One.",
+    themeColor = "#050b18",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+
+        <meta
+            name="description"
+            content={description}
+        />
+
+        <meta
+            name="theme-color"
+            content={themeColor}
+        />
+
+        <link
+            rel="icon"
+            type="image/png"
+            href="/image/BBW Logo.png"
+        />
+
+        <title>{title}</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        
+    </head>
+
+    <body>
+        <slot />
+    </body>
+</html>
