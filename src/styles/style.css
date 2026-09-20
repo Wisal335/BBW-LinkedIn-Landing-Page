@@ -725,18 +725,15 @@ button {
         statFill 2s ease-in-out infinite;
 }
 
-.stat-item:nth-child(1)
-.stat-bar::after {
+.stat-item:nth-child(1) .stat-bar::after {
     animation-delay: 0s;
 }
 
-.stat-item:nth-child(2)
-.stat-bar::after {
+.stat-item:nth-child(2) .stat-bar::after {
     animation-delay: 0.7s;
 }
 
-.stat-item:nth-child(3)
-.stat-bar::after {
+.stat-item:nth-child(3) .stat-bar::after {
     animation-delay: 1.4s;
 }
 
@@ -2094,7 +2091,7 @@ button {
 
 
 /* =========================================================
-   14. CONSULTATION / CALENDLY
+   14. CONSULTATION
 ========================================================= */
 
 .consultation-section {
@@ -2154,8 +2151,8 @@ button {
     display: grid;
 
     grid-template-columns:
-        minmax(0, 1fr)
-        minmax(0, 1fr);
+        minmax(0, 0.9fr)
+        minmax(0, 1.1fr);
 
     gap: 60px;
 
@@ -2359,7 +2356,7 @@ button {
         rgba(255, 255, 255, 0.08);
 
     background:
-        rgba(11, 21, 42, 0.60);
+        rgba(11, 21, 42, 0.70);
 
     backdrop-filter:
         blur(12px);
@@ -2367,6 +2364,10 @@ button {
     box-shadow:
         0 25px 70px
         rgba(0, 0, 0, 0.18);
+}
+
+.form-wrapper {
+    width: 100%;
 }
 
 .form-label {
@@ -2383,7 +2384,7 @@ button {
 }
 
 .form-intro {
-    margin-bottom: 25px;
+    margin-bottom: 28px;
 
     color: #8f9cb0;
 
@@ -2396,61 +2397,342 @@ button {
 
 
 /* =========================================================
-   CALENDLY
+   CONSULTATION FORM
 ========================================================= */
 
-.calendly-wrapper {
-    position: relative;
-
+#consultationForm {
     width: 100%;
-
-    overflow: hidden;
 }
 
-.calendly-wrapper iframe {
-    display: block;
+.form-grid {
+    display: grid;
 
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+.form-field {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.form-field.full {
+    grid-column: 1 / -1;
+}
+
+.form-field label {
+    color: #d7dfeb;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    line-height: 1.4;
+}
+
+.form-field label span {
+    color: #55e7c4;
+}
+
+.form-field input,
+.form-field select {
     width: 100%;
-    max-width: 100%;
 
-    min-height: 500px;
+    min-height: 48px;
+
+    padding:
+        12px 14px;
 
     border:
-        none;
+        1px solid
+        rgba(255, 255, 255, 0.10);
 
-    border-radius: 8px;
+    border-radius: 5px;
+
+    outline: none;
+
+    color: #ffffff;
 
     background:
-        rgba(255, 255, 255, 0.03);
+        rgba(255, 255, 255, 0.045);
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-.calendly-note {
+.form-field input::placeholder {
+    color: #64728a;
+}
+
+.form-field select {
+    color: #d7dfeb;
+
+    cursor: pointer;
+}
+
+.form-field select option {
+    color: #ffffff;
+
+    background: #0a1428;
+}
+
+.form-field input:hover,
+.form-field select:hover {
+    border-color:
+        rgba(255, 255, 255, 0.18);
+}
+
+.form-field input:focus,
+.form-field select:focus {
+    border-color:
+        rgba(57, 215, 255, 0.55);
+
+    background:
+        rgba(255, 255, 255, 0.06);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(57, 215, 255, 0.08);
+}
+
+
+/* =========================================================
+   HONEYPOT
+========================================================= */
+
+.honeypot {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+
+    border: 0;
+}
+
+
+/* =========================================================
+   CONSENT
+========================================================= */
+
+.consent-row {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+    color: #8f9cb0;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    cursor: pointer;
+}
+
+.consent-row input {
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.custom-checkbox {
+    position: relative;
+
+    width: 18px;
+    height: 18px;
+
+    flex: 0 0 18px;
+
+    margin-top: 1px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.18);
+
+    border-radius: 4px;
+
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.consent-row input:checked + .custom-checkbox {
+    border-color:
+        var(--cyan);
+
+    background:
+        var(--cyan);
+
+    box-shadow:
+        0 0 15px
+        rgba(57, 215, 255, 0.20);
+}
+
+.consent-row input:checked + .custom-checkbox::after {
+    content: "";
+
+    position: absolute;
+
+    left: 5px;
+    top: 2px;
+
+    width: 5px;
+    height: 9px;
+
+    border:
+        solid
+        #06101e;
+
+    border-width:
+        0 2px 2px 0;
+
+    transform:
+        rotate(45deg);
+}
+
+
+/* =========================================================
+   FORM SUBMIT
+========================================================= */
+
+.form-submit {
+    width: 100%;
+
+    min-height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 24px;
+
+    padding:
+        10px 12px
+        10px 22px;
+
+    border-radius: 5px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            90deg,
+            #176ff2,
+            #6255e9
+        );
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(33, 137, 255, 0.12);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        filter 0.3s ease;
+}
+
+.form-submit span:last-child {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    flex: 0 0 34px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.14);
+
+    font-size: 18px;
+}
+
+.form-submit:hover {
+    transform:
+        translateY(-3px);
+
+    filter:
+        brightness(1.05);
+
+    box-shadow:
+        0 18px 45px
+        rgba(33, 137, 255, 0.30);
+}
+
+.form-submit:active {
+    transform:
+        translateY(-1px);
+}
+
+.form-submit:focus-visible {
+    outline:
+        2px solid
+        var(--cyan);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   FORM DISCLAIMER
+========================================================= */
+
+.form-disclaimer {
     margin-top: 14px;
 
     color: #65738a;
 
-    font-size: 12px;
+    font-size: 11px;
 
     line-height: 1.5;
 
     text-align: center;
 }
 
-.calendly-note a {
-    color: var(--cyan);
-
-    font-weight: 700;
-
-    transition:
-        color 0.3s ease;
-}
-
-.calendly-note a:hover {
-    color: #ffffff;
-}
-
 .privacy-text {
-    margin-top: 20px;
+    margin-top: 16px;
+
+    padding-top: 16px;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.06);
 
     color: #65738a;
 
@@ -2461,6 +2743,68 @@ button {
     text-align: center;
 }
 
+
+/* =========================================================
+   FORM VALIDATION
+========================================================= */
+
+.form-field input:invalid:not(:placeholder-shown),
+.form-field select:invalid {
+    border-color:
+        rgba(255, 107, 107, 0.35);
+}
+
+.form-field input:valid:not(:placeholder-shown),
+.form-field select:valid {
+    border-color:
+        rgba(85, 231, 196, 0.18);
+}
+
+/* =====================================================
+   FORM MESSAGES
+===================================================== */
+
+.form-message {
+    width: 100%;
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: center;
+    transition: opacity 0.3s ease;
+}
+
+.form-message.success {
+    border: 1px solid rgba(85, 231, 196, 0.35);
+    background: rgba(85, 231, 196, 0.08);
+    color: var(--cyan-soft);
+}
+
+.form-message.error {
+    border: 1px solid rgba(255, 120, 120, 0.35);
+    background: rgba(255, 120, 120, 0.08);
+    color: #ff9b9b;
+}
+
+.form-message.fade-out {
+    opacity: 0;
+}
+
+
+/* =====================================================
+   FORM SUBMIT LOADING
+===================================================== */
+
+.form-submit:disabled {
+    opacity: 0.7;
+    cursor: wait;
+    transform: none;
+}
+
+.form-submit.is-loading {
+    pointer-events: none;
+}
 
 /* =========================================================
    15. FOOTER
@@ -2593,6 +2937,12 @@ footer span {
         justify-content: center;
     }
 
+    .consultation-left > p {
+        max-width: 700px;
+
+        margin-inline: auto;
+    }
+
     .consultation-benefits {
         max-width: 600px;
 
@@ -2608,6 +2958,19 @@ footer span {
         justify-content: center;
     }
 
+    .consultation-note {
+        max-width: 600px;
+
+        margin-inline: auto;
+    }
+
+    .consultation-right {
+        width: 100%;
+
+        max-width: 700px;
+
+        margin-inline: auto;
+    }
 }
 
 
@@ -2877,7 +3240,9 @@ footer span {
     }
 
 
-    /* CONSULTATION */
+    /* =====================================================
+       CONSULTATION
+    ===================================================== */
 
     .consultation-section {
         padding:
@@ -2907,21 +3272,69 @@ footer span {
     }
 
     .consultation-right {
+        width: 100%;
+
         padding:
             24px 18px;
     }
 
 
-    /* CALENDLY */
+    /* =====================================================
+       FORM
+    ===================================================== */
 
-    .calendly-wrapper {
-        width: 100%;
+    .form-label {
+        font-size: 9px;
+
+        letter-spacing: 1.5px;
     }
 
-    .calendly-wrapper iframe {
-        width: 100%;
+    .form-intro {
+        font-size: 13px;
 
-        min-height: 400px;
+        margin-bottom: 22px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+    }
+
+    .form-field.full {
+        grid-column: auto;
+    }
+
+    .form-field input,
+    .form-field select {
+        min-height: 50px;
+
+        padding:
+            12px 13px;
+
+        font-size: 13px;
+    }
+
+    .consent-row {
+        font-size: 11px;
+    }
+
+    .form-submit {
+        min-height: 54px;
+
+        padding:
+            10px 10px
+            10px 18px;
+
+        font-size: 11px;
+    }
+
+    .form-disclaimer {
+        font-size: 10px;
+    }
+
+    .privacy-text {
+        font-size: 11px;
     }
 
 
@@ -2972,10 +3385,13 @@ footer span {
             rgba(0, 0, 0, 0.20);
     }
 
-    .mobile-cta span {
-        font-size: 20px;
+    .mobile-cta span:first-child {
+        font-size: 12px;
     }
 
+    .mobile-cta span:last-child {
+        font-size: 20px;
+    }
 }
 
 
@@ -3021,10 +3437,6 @@ footer span {
         font-size: 14px;
     }
 
-    .calendly-wrapper iframe {
-        min-height: 350px;
-    }
-
     .result-card {
         padding:
             20px 16px;
@@ -3040,6 +3452,27 @@ footer span {
         align-items: flex-start;
     }
 
+    .consultation-right {
+        padding:
+            20px 14px;
+    }
+
+    .form-submit {
+        font-size: 10px;
+
+        padding:
+            10px 8px
+            10px 14px;
+    }
+
+    .form-submit span:last-child {
+        width: 30px;
+        height: 30px;
+
+        flex-basis: 30px;
+
+        font-size: 15px;
+    }
 }
 
 
@@ -3063,7 +3496,7 @@ footer span {
 
     .animate-on-scroll {
         opacity: 1;
+
         transform: none;
     }
-
 }
