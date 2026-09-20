@@ -8,10 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
     /* =====================================================
        CONFIGURATION
     ===================================================== */
-
     const GOOGLE_APPS_SCRIPT_URL =
-        "https://script.google.com/macros/s/AKfycbzU8ygBNUhzK_fdNID6WAMsi5C9piKrWDWRcM7d4u_GtfV3phqR9wf20TRmnRiaPRVEVA/exec";
-
+        "https://script.google.com/macros/s/AKfycbysWxU5WYBG7RZxAKkjAe51sHGRcva0wwJkeUCOE-_lvJ39TDtP2_7C_e1aAqYRCkqG2w/exec";
 
     /* =====================================================
        SCROLL PROGRESS
