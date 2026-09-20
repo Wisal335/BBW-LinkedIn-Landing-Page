@@ -176,128 +176,228 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     }
+/* =====================================================
+   CONSULTATION FORM
+===================================================== */
+
+const consultationForm =
+    document.getElementById("consultationForm");
+
+if (consultationForm) {
+
+    const submitButton =
+        consultationForm.querySelector(".form-submit");
+
+    const submitText =
+        submitButton
+            ? submitButton.querySelector("span")
+            : null;
 
 
-    /* =====================================================
-       CONSULTATION FORM
-    ===================================================== */
+    consultationForm.addEventListener(
+        "submit",
+        async function (event) {
 
-    const consultationForm =
-        document.getElementById(
-            "consultationForm"
-        );
-
-    if (consultationForm) {
-
-        const submitButton =
-            consultationForm.querySelector(
-                ".form-submit"
-            );
-
-        const submitText =
-            submitButton
-                ? submitButton.querySelector("span")
-                : null;
+            event.preventDefault();
 
 
-        consultationForm.addEventListener(
-            "submit",
-            async function (event) {
+            /* -----------------------------------------
+               BASIC VALIDATION
+            ----------------------------------------- */
 
-                event.preventDefault();
+            if (!consultationForm.checkValidity()) {
+
+                consultationForm.reportValidity();
+
+                return;
+            }
 
 
-                /* -----------------------------------------
-                   BASIC VALIDATION
-                ----------------------------------------- */
+            /* -----------------------------------------
+               HONEYPOT CHECK
+            ----------------------------------------- */
 
-                if (!consultationForm.checkValidity()) {
+            const honeypot =
+                consultationForm.querySelector(
+                    '[name="bot-field"]'
+                );
 
-                    consultationForm.reportValidity();
+            if (
+                honeypot &&
+                honeypot.value.trim() !== ""
+            ) {
 
-                    return;
+                return;
+            }
+
+
+            /* -----------------------------------------
+               PREVENT DOUBLE SUBMISSION
+            ----------------------------------------- */
+
+            if (
+                consultationForm.dataset.submitting === "true"
+            ) {
+                return;
+            }
+
+            consultationForm.dataset.submitting = "true";
+
+
+            /* -----------------------------------------
+               COLLECT FORM DATA
+            ----------------------------------------- */
+
+            const formData =
+                new FormData(consultationForm);
+
+
+            const data = {
+
+                firstName:
+                    formData.get("firstName") || "",
+
+                lastName:
+                    formData.get("lastName") || "",
+
+                businessName:
+                    formData.get("businessName") || "",
+
+                email:
+                    formData.get("email") || "",
+
+                phone:
+                    formData.get("phone") || "",
+
+                website:
+                    formData.get("website") || "",
+
+                challenge:
+                    formData.get("challenge") || "",
+
+                preferredDate:
+                    formData.get("preferredDate") || "",
+
+                preferredTime:
+                    formData.get("preferredTime") || "",
+
+                consent:
+                    formData.get("consent") || "",
+
+                source:
+                    formData.get("source") || "LinkedIn"
+
+            };
+
+
+            /* -----------------------------------------
+               IMMEDIATE BUTTON STATE
+            ----------------------------------------- */
+
+            if (submitButton) {
+
+                submitButton.disabled = true;
+
+                submitButton.classList.add(
+                    "is-loading"
+                );
+            }
+
+            if (submitText) {
+
+                submitText.textContent =
+                    "Sending Request...";
+            }
+
+
+            try {
+
+                /* -------------------------------------
+                   SEND TO GOOGLE APPS SCRIPT
+                ------------------------------------- */
+
+                const response =
+                    await fetch(
+                        GOOGLE_APPS_SCRIPT_URL,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "text/plain;charset=utf-8"
+                            },
+
+                            body:
+                                JSON.stringify(data)
+                        }
+                    );
+
+
+                /* -------------------------------------
+                   CHECK RESPONSE
+                ------------------------------------- */
+
+                const result =
+                    await response.json();
+
+
+                if (!result.success) {
+
+                    throw new Error(
+                        result.error ||
+                        "Unable to submit the form."
+                    );
                 }
 
 
-                /* -----------------------------------------
-                   HONEYPOT CHECK
-                ----------------------------------------- */
+                /* -------------------------------------
+                   SUCCESS MESSAGE
+                ------------------------------------- */
 
-                const honeypot =
-                    consultationForm.querySelector(
-                        '[name="bot-field"]'
-                    );
-
-                if (
-                    honeypot &&
-                    honeypot.value.trim() !== ""
-                ) {
-
-                    return;
-                }
+                showFormMessage(
+                    consultationForm,
+                    "success",
+                    "Thank you! Your consultation request has been received. We will contact you to confirm the conversation."
+                );
 
 
-                /* -----------------------------------------
-                   GET FORM DATA
-                ----------------------------------------- */
+                /* -------------------------------------
+                   CLEAR FORM
+                ------------------------------------- */
 
-                const formData =
-                    new FormData(
-                        consultationForm
-                    );
+                consultationForm.reset();
 
 
-                /* -----------------------------------------
-                   CONVERT TO OBJECT
-                ----------------------------------------- */
+            } catch (error) {
 
-                const data = {
-
-                    firstName:
-                        formData.get("firstName") || "",
-
-                    lastName:
-                        formData.get("lastName") || "",
-
-                    businessName:
-                        formData.get("businessName") || "",
-
-                    email:
-                        formData.get("email") || "",
-
-                    phone:
-                        formData.get("phone") || "",
-
-                    website:
-                        formData.get("website") || "",
-
-                    challenge:
-                        formData.get("challenge") || "",
-
-                    preferredDate:
-                        formData.get("preferredDate") || "",
-
-                    preferredTime:
-                        formData.get("preferredTime") || "",
-
-                    consent:
-                        formData.get("consent") || "",
-
-                    source:
-                        formData.get("source") || "LinkedIn"
-
-                };
+                console.error(
+                    "Consultation form error:",
+                    error
+                );
 
 
-                /* -----------------------------------------
-                   BUTTON LOADING STATE
-                ----------------------------------------- */
+                /* -------------------------------------
+                   ERROR MESSAGE
+                ------------------------------------- */
+
+                showFormMessage(
+                    consultationForm,
+                    "error",
+                    "Something went wrong while sending your request. Please try again."
+                );
+
+
+            } finally {
+
+                /* -------------------------------------
+                   RESTORE BUTTON
+                ------------------------------------- */
 
                 if (submitButton) {
 
-                    submitButton.disabled = true;
+                    submitButton.disabled = false;
 
-                    submitButton.classList.add(
+                    submitButton.classList.remove(
                         "is-loading"
                     );
                 }
@@ -305,110 +405,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (submitText) {
 
                     submitText.textContent =
-                        "Sending Request...";
+                        "Request My Free Consultation";
                 }
 
 
-                try {
-
-                    /* -------------------------------------
-                       SEND TO GOOGLE APPS SCRIPT
-                    ------------------------------------- */
-
-                    const response =
-                        await fetch(
-                            GOOGLE_APPS_SCRIPT_URL,
-                            {
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "text/plain;charset=utf-8"
-                                },
-
-                                body:
-                                    JSON.stringify(data)
-                            }
-                        );
-
-
-                    /* -------------------------------------
-                       READ RESPONSE
-                    ------------------------------------- */
-
-                    const result =
-                        await response.json();
-
-
-                    if (!result.success) {
-
-                        throw new Error(
-                            result.error ||
-                            "Unable to submit the form."
-                        );
-                    }
-
-
-                    /* -------------------------------------
-                       SUCCESS
-                    ------------------------------------- */
-
-                    showFormMessage(
-                        consultationForm,
-                        "success",
-                        "Thank you! Your consultation request has been received. We will contact you to confirm the conversation."
-                    );
-
-
-                    consultationForm.reset();
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Consultation form error:",
-                        error
-                    );
-
-
-                    /* -------------------------------------
-                       ERROR
-                    ------------------------------------- */
-
-                    showFormMessage(
-                        consultationForm,
-                        "error",
-                        "Something went wrong while sending your request. Please try again."
-                    );
-
-
-                } finally {
-
-                    /* -------------------------------------
-                       RESTORE BUTTON
-                    ------------------------------------- */
-
-                    if (submitButton) {
-
-                        submitButton.disabled = false;
-
-                        submitButton.classList.remove(
-                            "is-loading"
-                        );
-                    }
-
-                    if (submitText) {
-
-                        submitText.textContent =
-                            "Request My Free Consultation";
-                    }
-
-                }
+                consultationForm.dataset.submitting =
+                    "false";
 
             }
-        );
 
-    }
+        }
+    );
+
+}
 
 
     /* =====================================================
