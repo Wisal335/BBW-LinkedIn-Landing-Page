@@ -1377,57 +1377,310 @@ const description =
 
             </div>
 
+<!-- RIGHT / CONSULTATION FORM -->
 
-            <!-- RIGHT / CALENDLY -->
+<div class="consultation-right">
 
-            <div class="consultation-right">
+    <div class="form-wrapper">
 
-                <div class="form-wrapper">
+        <p class="form-label">
+            REQUEST YOUR FREE CONSULTATION
+        </p>
 
-                    <p class="form-label">
-                        SCHEDULE YOUR FREE CONSULTATION
-                    </p>
+        <p class="form-intro">
+            Tell us a little about your business and choose
+            a preferred time for the conversation.
+        </p>
+
+        <form
+            id="consultationForm"
+            name="LinkedIn-ROI-Consultation"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+        >
+
+            <input
+                type="hidden"
+                name="form-name"
+                value="LinkedIn-ROI-Consultation"
+            />
+
+            <input
+                type="hidden"
+                name="source"
+                value="LinkedIn"
+            />
+
+            <!-- Honeypot -->
+
+            <div class="honeypot" aria-hidden="true">
+
+                <label for="bot-field">
+                    Leave this field empty
+                </label>
+
+                <input
+                    type="text"
+                    id="bot-field"
+                    name="bot-field"
+                    tabindex="-1"
+                    autocomplete="off"
+                />
+
+            </div>
 
 
-                    <p class="form-intro">
+            <div class="form-grid">
 
-                        Choose a time that works for you.
+                <div class="form-field">
 
-                        We'll use the conversation to understand
-                        your workflow and identify potential ROI.
+                    <label for="firstName">
+                        First name <span>*</span>
+                    </label>
 
-                    </p>
+                    <input
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        placeholder="Your first name"
+                        autocomplete="given-name"
+                        required
+                    />
 
-
-                    <div class="calendly-wrapper">
-
-                        <iframe
-                            src="https://calendly.com/bigbrainway/consultation?hide_gdpr_banner=1&background_color=0a1428&text_color=ffffff&primary_color=2189ff"
-                            width="100%"
-                            height="500"
-                            frameborder="0"
-                            title="Book a consultation with Big Brain Way"
-                            allow="autoplay; fullscreen"
-                            loading="lazy"
-                        ></iframe>
+                </div>
 
 
-                        <div class="calendly-note">
+                <div class="form-field">
 
-                            If Calendly is not loading,
+                    <label for="lastName">
+                        Last name <span>*</span>
+                    </label>
 
-                            <a
-                                href="https://calendly.com/bigbrainway/consultation"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                book directly here →
-                            </a>
+                    <input
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        placeholder="Your last name"
+                        autocomplete="family-name"
+                        required
+                    />
 
-                        </div>
+                </div>
 
-                    </div>
 
+                <div class="form-field full">
+
+                    <label for="businessName">
+                        Business name <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="businessName"
+                        name="businessName"
+                        placeholder="Your business name"
+                        autocomplete="organization"
+                        required
+                    />
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="email">
+                        Email <span>*</span>
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@business.com"
+                        autocomplete="email"
+                        required
+                    />
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="phone">
+                        Phone <span>*</span>
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="+1 000 000 0000"
+                        autocomplete="tel"
+                        required
+                    />
+
+                </div>
+
+
+                <div class="form-field full">
+
+                    <label for="website">
+                        Website
+                    </label>
+
+                    <input
+                        type="url"
+                        id="website"
+                        name="website"
+                        placeholder="https://yourbusiness.com"
+                        autocomplete="url"
+                    />
+
+                </div>
+
+
+                <div class="form-field full">
+
+                    <label for="challenge">
+                        Main operational challenge <span>*</span>
+                    </label>
+
+                    <select
+                        id="challenge"
+                        name="challenge"
+                        required
+                    >
+
+                        <option value="">
+                            Select your biggest challenge
+                        </option>
+
+                        <option value="manual-work">
+                            Too much manual work
+                        </option>
+
+                        <option value="slow-lead-response">
+                            Slow lead response
+                        </option>
+
+                        <option value="disconnected-systems">
+                            Disconnected systems
+                        </option>
+
+                        <option value="reporting">
+                            Reporting / data issues
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="preferredDate">
+                        Preferred date <span>*</span>
+                    </label>
+
+                    <input
+                        type="date"
+                        id="preferredDate"
+                        name="preferredDate"
+                        required
+                    />
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="preferredTime">
+                        Preferred time <span>*</span>
+                    </label>
+
+                    <select
+                        id="preferredTime"
+                        name="preferredTime"
+                        required
+                    >
+
+                        <option value="">
+                            Select a time
+                        </option>
+
+                        <option value="morning">
+                            Morning
+                        </option>
+
+                        <option value="midday">
+                            Midday
+                        </option>
+
+                        <option value="afternoon">
+                            Afternoon
+                        </option>
+
+                        <option value="evening">
+                            Evening
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <label class="consent-row">
+
+                <input
+                    type="checkbox"
+                    name="consent"
+                    value="yes"
+                    required
+                />
+
+                <span class="custom-checkbox"></span>
+
+                <span>
+                    I agree to be contacted about my consultation request.
+                </span>
+
+            </label>
+
+
+            <button
+                type="submit"
+                class="form-submit"
+            >
+
+                <span>
+                    Request My Free Consultation
+                </span>
+
+                <span aria-hidden="true">
+                    →
+                </span>
+
+            </button>
+
+
+            <p class="form-disclaimer">
+                Your details are used to respond to your consultation
+                request. No Calendly or third-party scheduling widget
+                is used on this page.
+            </p>
+
+        </form>
+
+    </div>
+
+</div>
 
                     <div class="privacy-text">
 
